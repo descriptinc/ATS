@@ -1,0 +1,308 @@
+/* Minimal academic-page styling, mostly cribbed from typical Nerfies / Self-Forcing++ */
+
+:root {
+  /* Descript brand palette — Red & Maroon ramps only */
+  --rec-red:     #F73B3B; /* Red 450  — CTA, sparingly */
+  --rec-red-dk:  #B81B1E; /* Red 600  — CTA hover */
+  --red-50:      #FFE8DB;
+  --light-peach: #FFD6C5; /* Red 100  — soft tint */
+  --peach:       #FF8969; /* Red 300 */
+  --canvas:      #FFF8F4; /* Red 0    — page background */
+  --edit-maroon: #651A39; /* Maroon 750 — primary accent */
+  --maroon-900:  #390A1A;
+  --neutral-50:  #F1EAED;
+  --neutral-100: #E4DDE0;
+  --neutral-200: #D1C7CB;
+  --neutral-600: #715661;
+  --screen-black:#110A0D;
+
+  /* Semantic tokens */
+  --fg:      var(--screen-black);
+  --fg-2:    var(--neutral-600);
+  --bg:      #ffffff;
+  --acc:     var(--edit-maroon);
+  --acc-2:   var(--rec-red);
+  --rule:    var(--neutral-100);
+  --ours-bg: var(--light-peach);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 18px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+        sans-serif;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+section {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+h1, h2, h3 {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+h2 {
+  font-size: 30px;
+  margin: 0 0 24px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--acc);
+  display: inline-block;
+}
+
+h3 {
+  font-size: 22px;
+  margin: 40px 0 16px;
+}
+
+a { color: var(--acc); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* -------- header -------- */
+header {
+  background: var(--canvas);
+  padding: 56px 0 40px;
+  text-align: center;
+}
+header .authors {
+  font-size: 19px;
+  color: var(--fg-2);
+  margin-bottom: 4px;
+}
+header .authors span { margin: 0 8px; }
+
+header .affiliations {
+  font-size: 16px;
+  color: var(--edit-maroon);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+header .links { margin-top: 16px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  margin: 0 4px;
+  background: var(--rec-red);
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color 0.15s ease;
+}
+.btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.btn:hover {
+  background: var(--rec-red-dk);
+  text-decoration: none;
+}
+
+/* -------- teaser -------- */
+.teaser {
+  background: var(--canvas);
+  text-align: center;
+  padding-top: 0px !important;
+}
+.teaser video,
+.teaser iframe {
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.teaser .caption {
+  margin-top: 12px;
+  color: var(--fg-2);
+  font-size: 16px;
+}
+
+/* -------- figures -------- */
+figure {
+  margin: 32px auto;
+  text-align: center;
+  max-width: 720px;
+}
+figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: #fff;
+}
+figure.wide   { max-width: 880px; }
+figure.narrow { max-width: 480px; }
+.method-figs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 24px;
+  margin: 32px auto;
+  max-width: 1200px;
+  align-items: stretch;
+}
+.method-figs figure {
+  margin: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.method-figs figure img {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  margin: 0;
+  background: #ffffff;
+}
+.method-figs figcaption {
+  margin-top: 12px;
+}
+figcaption {
+  margin-top: 10px;
+  color: var(--fg-2);
+  font-size: 16px;
+  text-align: left;
+}
+
+/* -------- table -------- */
+.table-wrap { overflow-x: auto; }
+
+table.results {
+  margin: 16px auto;
+  border-collapse: collapse;
+  font-size: 16px;
+  min-width: 760px;
+}
+table.results th,
+table.results td {
+  padding: 10px 14px;
+  border: 1px solid var(--rule);
+  text-align: center;
+}
+table.results thead th {
+  background: var(--neutral-50);
+  font-weight: 600;
+}
+table.results tr.ours td {
+  background: var(--ours-bg);
+  color: var(--edit-maroon);
+}
+
+/* -------- video grid -------- */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+/* 3-column layout for Wan qualitative comparisons */
+.wan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px 20px;
+  margin-top: 16px;
+  align-items: stretch;
+}
+.wan-colhead {
+  text-align: left;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--fg);
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--acc);
+}
+.wan-grid .wan-source {
+  grid-row: 2 / span 2;
+  align-self: start;
+}
+.vid {
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 8px;
+}
+.vid.ours {
+  border-color: var(--edit-maroon);
+  background: var(--ours-bg);
+}
+.vid .vlabel {
+  font-size: 15px;
+  color: var(--fg-2);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.vid.ours .vlabel { color: var(--edit-maroon); font-weight: 600; }
+.vid video,
+.vid iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+  border: 0;
+  background: #000;
+  border-radius: 3px;
+}
+
+/* -------- code/bibtex -------- */
+pre {
+  background: var(--neutral-50);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 18px;
+  overflow-x: auto;
+  font-size: 15px;
+  line-height: 1.55;
+  font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+}
+
+/* -------- footer -------- */
+footer {
+  padding: 32px 0;
+  text-align: center;
+}
+footer .footer-logo {
+  margin-bottom: 16px;
+  line-height: 0;
+}
+footer .footer-logo img {
+  display: inline-block;
+  width: auto;
+  height: 22px;
+  max-height: 22px;
+  max-width: 110px;
+  opacity: 0.75;
+}
+footer .muted {
+  color: var(--fg-2);
+  font-size: 15px;
+}

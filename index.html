@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Goodbye Drift: Anchored Tree Sampling for Long-Horizon Video-to-Video Generation</title>
+<link rel="stylesheet" href="assets/style.css?v=11" />
+</head>
+<body>
+
+<!-- ============================================================== -->
+<!-- HEADER                                                          -->
+<!-- ============================================================== -->
+<header>
+  <div class="container" style="padding: 30px 32px;">
+    <h1>Goodbye Drift: Anchored Tree Sampling for Long-Horizon Video-to-Video Generation</h1>
+    <div class="authors">
+      <span>Matthew Bendel</span>
+      <span>Stephen W. Bailey</span>
+      <span>Mithilesh Vaidya</span>
+      <span>Sumukh Badam</span>
+      <span>Xingzhe He</span>
+    </div>
+    <div class="affiliations">Descript, Inc.</div>
+    <div class="links">
+      <a href="#" class="btn" aria-label="Paper">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+        Paper
+      </a>
+      <a href="https://github.com/descriptinc/ats" class="btn" aria-label="Code on GitHub">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.1c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.78 1.19 1.78 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.07.78 2.16v3.2c0 .3.21.66.8.55C20.21 21.39 23.5 17.07 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+        Code
+      </a>
+      <a href="#bibtex" class="btn" aria-label="BibTeX">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 4H6a2 2 0 0 0-2 2v3.5a2 2 0 0 1-2 2v1a2 2 0 0 1 2 2V18a2 2 0 0 0 2 2h2.5v-2H6.5c-.55 0-1-.45-1-1v-3a2.5 2.5 0 0 0-1.27-2.17V12.17A2.5 2.5 0 0 0 5.5 10V7c0-.55.45-1 1-1h2v-2zm7 0h2.5a2 2 0 0 1 2 2v3.5a2 2 0 0 0 2 2v1a2 2 0 0 0-2 2V18a2 2 0 0 1-2 2h-2.5v-2h2c.55 0 1-.45 1-1v-3a2.5 2.5 0 0 1 1.27-2.17V12.17A2.5 2.5 0 0 1 18.5 10V7c0-.55-.45-1-1-1h-2V4z"/></svg>
+        BibTeX
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================== -->
+<!-- TEASER                                                          -->
+<!-- ============================================================== -->
+<section class="teaser">
+  <div class="container">
+    <h2>40+ minute V2V on LTX-2.3</h2>
+    <p class="caption">
+      ATS sustains identity, appearance, and scene state across the full
+      horizon for all five VACE conditioning modalities&mdash;no
+      horizon-scaling drift, no cache resets.
+    </p>
+    <div class="video-grid">
+      <div class="vid ours"><div class="vlabel">Inpainting</div>
+        <iframe src="https://www.youtube.com/embed/uKGd_hjArtk?autoplay=1&mute=1&loop=1&playlist=uKGd_hjArtk&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">Outpainting</div>
+        <iframe src="https://www.youtube.com/embed/zwNn2bjA98Y?autoplay=1&mute=1&loop=1&playlist=zwNn2bjA98Y&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">Canny</div>
+        <iframe src="https://www.youtube.com/embed/ovVakDIZsbw?autoplay=1&mute=1&loop=1&playlist=ovVakDIZsbw&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">Depth</div>
+        <iframe src="https://www.youtube.com/embed/EpPRyJze7Bo?autoplay=1&mute=1&loop=1&playlist=EpPRyJze7Bo&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">Pose</div>
+        <iframe src="https://www.youtube.com/embed/vEy6_yUuFIA?autoplay=1&mute=1&loop=1&playlist=vEy6_yUuFIA&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- ABSTRACT                                                        -->
+<!-- ============================================================== -->
+<section id="abstract">
+  <div class="container">
+    <h2>Abstract</h2>
+    <p>
+      Long-horizon video generation suffers from two intertwined issues.
+      First, there is <em>drift</em>, where video quality degrades over time.
+      Second, there are <em>continuity</em> issues which manifest as object
+      permanence failures, or improperly rendering transient content (e.g.,
+      an object that appears in non-consecutive frames changing color or
+      style). Recent work has focused on autoregressive distillation
+      techniques that attack both problems simultaneously.
+      We instead choose to focus on drift directly and introduce
+      <strong>Anchored Tree Sampling (ATS)</strong>: a training-free,
+      inference-time scheduler that replaces left-to-right rollout with
+      sparse-to-dense, anchor-bounded imputation organized as a tree. A root
+      call produces sparse anchors over the full horizon, recursive
+      refinement generates intermediate anchors, and final leaf spans are
+      synthesized between neighboring anchors. This reduces the critical
+      path from <em>K</em> sequential rollout steps to <em>L</em>&nbsp;+&nbsp;1
+      tree-hierarchical steps and converts horizon-compounding drift into
+      anchor-bounded drift.
+      We focus on V2V generation in the <em>static-camera</em> regime, where
+      sparse anchors over the horizon are well approximated by the dense
+      conditioning signal, and the base model can produce them without
+      retraining. We evaluate ATS against two contemporary autoregressive
+      baselines on Wan&nbsp;2.1&nbsp;+&nbsp;VACE, across five conditioning
+      modalities (inpainting, outpainting, edge, pose, depth). We show that
+      ATS outperforms both competitors in overall quality, as well as in
+      drift prevention. We additionally demonstrate stable
+      &ge;&nbsp;40-minute generation on LTX-2.3 across the same five
+      modalities. We conclude by proposing a path forward to extend ATS to
+      arbitrarily long T2V generation, as well as the dynamic-camera and
+      multi-shot regimes.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- METHOD                                                          -->
+<!-- ============================================================== -->
+<section id="method">
+  <div class="container">
+    <h2>Method</h2>
+    <p>
+      ATS replaces left-to-right rollout with <em>sparse-to-dense,
+      anchor-bounded imputation</em> organized as a tree. A
+      conditioning-only <strong>root</strong> call emits sparse anchors over
+      the full horizon, optional <strong>refinement</strong> levels insert
+      intermediate anchors between them, and <strong>leaf</strong> calls
+      densely fill each interval bracketed by a pair of anchors. Every
+      non-root call is a bidirectional infill bounded by both endpoints,
+      so errors cannot compound across the horizon. Sibling calls within a
+      level are conditionally independent, so the critical path collapses
+      from <em>K</em> sequential chunks to <em>L</em>&nbsp;+&nbsp;1
+      hierarchical steps, with <em>L</em>&nbsp;=&nbsp;O(log&nbsp;<em>T</em>).
+      The construction is training-free: any pretrained two-sided V2V
+      generator (e.g.&nbsp;Wan&nbsp;2.1&nbsp;+&nbsp;VACE, LTX-2.3) serves as
+      the base model.
+    </p>
+
+    <div class="method-figs">
+      <figure>
+        <img src="assets/images/tree_panel_left.png" alt="Tree structure of ATS"/>
+        <figcaption>
+          <strong>Figure 1a.</strong> Tree structure. Three level chunks
+          side-by-side, each showing the cells visible at that level
+          (conditioning input on the left, generated output on the right).
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/tree_panel_right.jpg" alt="Sparse-to-dense filling"/>
+        <figcaption>
+          <strong>Figure 1b.</strong> Sparse-to-dense filling. Each chunk
+          shows the full timeline twice: input row above (state before this
+          level) and output row below (state after).
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- QUANTITATIVE RESULTS                                            -->
+<!-- ============================================================== -->
+<section id="quantitative">
+  <div class="container">
+    <h2>Quantitative Results</h2>
+    <p class="caption">
+      Long-form quality and drift on Wan&nbsp;2.1&nbsp;+&nbsp;VACE, averaged
+      across five 30-minute source videos. Each distilled checkpoint is run
+      twice: rolled out autoregressively (AR) and scheduled inside the tree
+      (ATS). Global AQ and IQ are means over 60 uniformly-sampled keyframes;
+      |&Delta;<em>M</em>|<sub>c</sub> is the mean within-chunk drift over the
+      10 cache-reset windows; |&Delta;<em>M</em>|<sub>r</sub> is the mean
+      discontinuity across the 9 reset boundaries.
+    </p>
+    <div class="table-wrap">
+      <table class="results">
+        <thead>
+          <tr>
+            <th rowspan="2">Checkpoint</th>
+            <th rowspan="2">Sampler</th>
+            <th colspan="2">Global &uarr;</th>
+            <th colspan="2">Chunk drift &darr;</th>
+            <th colspan="2">Reset jump &darr;</th>
+          </tr>
+          <tr>
+            <th>AQ</th><th>IQ</th>
+            <th>|&Delta;AQ|<sub>c</sub></th><th>|&Delta;IQ|<sub>c</sub></th>
+            <th>|&Delta;AQ|<sub>r</sub></th><th>|&Delta;IQ|<sub>r</sub></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2">LongLive</td>
+            <td>AR</td>
+            <td>55.69</td><td>61.82</td>
+            <td>3.73</td><td>5.94</td>
+            <td>4.32</td><td>6.54</td>
+          </tr>
+          <tr class="ours">
+            <td><strong>ATS (Ours)</strong></td>
+            <td><strong>59.69</strong></td><td><strong>68.46</strong></td>
+            <td><strong>2.51</strong></td><td><strong>1.50</strong></td>
+            <td><strong>1.77</strong></td><td><strong>1.35</strong></td>
+          </tr>
+          <tr>
+            <td rowspan="2">Reward Forcing</td>
+            <td>AR</td>
+            <td>52.78</td><td>63.48</td>
+            <td>3.37</td><td>3.15</td>
+            <td>3.85</td><td>5.08</td>
+          </tr>
+          <tr class="ours">
+            <td><strong>ATS (Ours)</strong></td>
+            <td><strong>58.51</strong></td><td><strong>69.64</strong></td>
+            <td><strong>2.44</strong></td><td><strong>1.43</strong></td>
+            <td><strong>2.08</strong></td><td><strong>1.23</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="method-figs">
+      <figure>
+        <img src="assets/images/chunk_drift_lines.jpg" alt="Chunk drift / reset jump curves"/>
+        <figcaption>
+          <strong>Figure 2.</strong> Per-chunk |&Delta;IQ| (left) and
+          per-reset |&Delta;IQ| (right) averaged across all five conditioning
+          modalities (inpainting, outpainting, edge, pose, depth). ATS stays
+          flat over the full 30-minute horizon while both AR baselines drift
+          within chunks and jump at every cache reset.
+        </figcaption>
+      </figure>
+
+      <figure>
+        <img src="assets/images/runtime_vs_duration.jpg" alt="Runtime vs. generated duration"/>
+        <figcaption>
+          <strong>Figure 3.</strong> Runtime vs. generated duration on
+          Wan&nbsp;2.1&nbsp;+&nbsp;VACE. AR baselines scale linearly in
+          <em>T</em>; ATS scales logarithmically thanks to parallel sibling
+          calls. On 8 GPUs, ATS is <strong>5.3&times;</strong> faster than
+          the strongest AR baseline at a 2000-second horizon&mdash;faster
+          than realtime.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- QUALITATIVE — per-task video grids                              -->
+<!-- ============================================================== -->
+<section id="qualitative">
+  <div class="container">
+    <h2>Qualitative Comparisons</h2>
+    <p class="caption">
+      30-minute Wan&nbsp;2.1&nbsp;+&nbsp;VACE reels. For each modality we
+      show the source clip alongside two samplers per distilled checkpoint
+      (LongLive and Reward Forcing): autoregressive rollout (AR) and ATS on
+      the same checkpoint.
+    </p>
+
+    <!-- =============== motion_pose =============== -->
+    <h3>Pose</h3>
+    <div class="wan-grid">
+      <div class="wan-colhead">Conditioning</div>
+      <div class="wan-colhead">LongLive</div>
+      <div class="wan-colhead">Reward Forcing</div>
+
+      <div class="vid wan-source"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/8xBFyUXUQFI?autoplay=1&mute=1&loop=1&playlist=8xBFyUXUQFI&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/zfpc5FIIOFo?autoplay=1&mute=1&loop=1&playlist=zfpc5FIIOFo&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/TeoCNwRKbeU?autoplay=1&mute=1&loop=1&playlist=TeoCNwRKbeU&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/ZSO0GiMDflA?autoplay=1&mute=1&loop=1&playlist=ZSO0GiMDflA&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/ZbnpfBhk5Fk?autoplay=1&mute=1&loop=1&playlist=ZbnpfBhk5Fk&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+
+    <!-- =============== motion_canny =============== -->
+    <h3>Canny</h3>
+    <div class="wan-grid">
+      <div class="wan-colhead">Conditioning</div>
+      <div class="wan-colhead">LongLive</div>
+      <div class="wan-colhead">Reward Forcing</div>
+
+      <div class="vid wan-source"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/7dBgAkI-3Ro?autoplay=1&mute=1&loop=1&playlist=7dBgAkI-3Ro&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/Y0V2TeGXP7w?autoplay=1&mute=1&loop=1&playlist=Y0V2TeGXP7w&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/5FV6NEYwmQs?autoplay=1&mute=1&loop=1&playlist=5FV6NEYwmQs&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/pQ8P40Ml4dA?autoplay=1&mute=1&loop=1&playlist=pQ8P40Ml4dA&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/mB9vrEQYzvQ?autoplay=1&mute=1&loop=1&playlist=mB9vrEQYzvQ&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+
+    <!-- =============== outpaint =============== -->
+    <h3>Outpaint</h3>
+    <div class="wan-grid">
+      <div class="wan-colhead">Conditioning</div>
+      <div class="wan-colhead">LongLive</div>
+      <div class="wan-colhead">Reward Forcing</div>
+
+      <div class="vid wan-source"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/d4iRnY6soFg?autoplay=1&mute=1&loop=1&playlist=d4iRnY6soFg&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/Ob3SQNBBqNs?autoplay=1&mute=1&loop=1&playlist=Ob3SQNBBqNs&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/0veacgDfgys?autoplay=1&mute=1&loop=1&playlist=0veacgDfgys&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/KH2Irj-G3m0?autoplay=1&mute=1&loop=1&playlist=KH2Irj-G3m0&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/3iNP3rcsxjM?autoplay=1&mute=1&loop=1&playlist=3iNP3rcsxjM&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+
+    <!-- =============== motion_depth =============== -->
+    <h3>Depth</h3>
+    <div class="wan-grid">
+      <div class="wan-colhead">Conditioning</div>
+      <div class="wan-colhead">LongLive</div>
+      <div class="wan-colhead">Reward Forcing</div>
+
+      <div class="vid wan-source"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/6-e6Pabajdw?autoplay=1&mute=1&loop=1&playlist=6-e6Pabajdw&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/yOJj0D07Z8U?autoplay=1&mute=1&loop=1&playlist=yOJj0D07Z8U&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/kV6dQXd-Ksk?autoplay=1&mute=1&loop=1&playlist=kV6dQXd-Ksk&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/xnb33Wz3-CI?autoplay=1&mute=1&loop=1&playlist=xnb33Wz3-CI&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/ePWyyvhPbkw?autoplay=1&mute=1&loop=1&playlist=ePWyyvhPbkw&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+
+    <!-- =============== inpaint =============== -->
+    <h3>Inpaint</h3>
+    <div class="wan-grid">
+      <div class="wan-colhead">Conditioning</div>
+      <div class="wan-colhead">LongLive</div>
+      <div class="wan-colhead">Reward Forcing</div>
+
+      <div class="vid wan-source"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/Ivu_0lUAAyY?autoplay=1&mute=1&loop=1&playlist=Ivu_0lUAAyY&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/uLw0snXF-mw?autoplay=1&mute=1&loop=1&playlist=uLw0snXF-mw&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid"><div class="vlabel">AR</div>
+        <iframe src="https://www.youtube.com/embed/9eAFsLLtt2A?autoplay=1&mute=1&loop=1&playlist=9eAFsLLtt2A&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/cbW0fFikBHQ?autoplay=1&mute=1&loop=1&playlist=cbW0fFikBHQ&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS (Ours)</div>
+        <iframe src="https://www.youtube.com/embed/VAJ9b69WzSU?autoplay=1&mute=1&loop=1&playlist=VAJ9b69WzSU&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- BIBTEX                                                          -->
+<!-- ============================================================== -->
+<section id="bibtex">
+  <div class="container">
+    <h2>BibTeX</h2>
+<pre><code>@article{bendel2026ats,
+  title   = {Goodbye Drift: Anchored Tree Sampling for Long-Horizon
+             Video-to-Video Generation},
+  author  = {Bendel, Matthew and Bailey, Stephen W. and Vaidya, Mithilesh
+             and Badam, Sumukh and He, Xingzhe},
+  year    = {2026},
+  institution = {Descript, Inc.},
+}
+</code></pre>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-logo">
+      <a href="https://www.descript.com">
+        <img src="assets/images/descript_logo.png" alt="Descript, Inc."/>
+      </a>
+    </div>
+    <p class="muted">
+      Page template inspired by
+      <a href="https://self-forcing-plus-plus.github.io/">Self-Forcing++</a>.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
