@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Goodbye Drift: Anchored Tree Sampling for Long-Horizon Video-to-Video Generation</title>
-<link rel="stylesheet" href="assets/style.css" />
+<link rel="stylesheet" href="assets/style.css?v=12" />
 <link rel="icon" type="image/png" sizes="96x96" href="https://static-cdn.descript.com/web/icons/favicon-96x96.png">
 <link rel="icon" type="image/svg+xml" href="https://static-cdn.descript.com/web/icons/favicon.svg">
 <link rel="shortcut icon" href="https://static-cdn.descript.com/web/icons/favicon.ico">
@@ -47,11 +47,14 @@
 <!-- ============================================================== -->
 <section class="teaser">
   <div class="container">
-    <h2>40+ minute V2V on LTX-2.3</h2>
+    <h2>40+ minute V2V using LTX-2.3</h2>
     <p class="caption">
-      ATS sustains identity, appearance, and scene state across the full
-      horizon for all five VACE conditioning modalities&mdash;no
-      horizon-scaling drift, no cache resets.
+      ATS is a training-free scheduler that works with <em>any</em> V2V
+      generator supporting two-sided, anchor-bracketed sampling. Here we
+      showcase &geq;&nbsp;40-minute generations on LTX-2.3 across five
+      conditioning modalities. Further down, we
+      quantify ATS head-to-head against autoregressive baselines on
+      Wan&nbsp;2.1&nbsp;+&nbsp;VACE.
     </p>
     <div class="video-grid">
       <div class="vid ours"><div class="vlabel">Inpainting</div>
