@@ -8,8 +8,8 @@
   <b>Descript, Inc.</b>
 </p>
 
-[![Paper](https://img.shields.io/badge/ArXiv-Paper-red)](#)
-[![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://descriptinc.github.io/ats)
+[![Paper](https://img.shields.io/badge/ArXiv-2605.20476-red)](https://arxiv.org/abs/2605.20476)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://descriptinc.github.io/ATS/)
 [![Code](https://img.shields.io/badge/GitHub-Coming_Soon-lightgrey)](#)
 
 ## Abstract
