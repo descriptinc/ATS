@@ -23,12 +23,13 @@ Code coming soon.
 ## Citation
 
 ```bibtex
-@article{bendel2026ats,
-  title       = {Goodbye Drift: Anchored Tree Sampling for Long-Horizon
-                 Video-to-Video Generation},
-  author      = {Bendel, Matthew and Bailey, Stephen W. and Vaidya, Mithilesh
-                 and Badam, Sumukh and He, Xingzhe},
-  year        = {2026},
-  institution = {Descript, Inc.},
+@misc{bendel2026goodbyedriftanchoredtree,
+      title={Goodbye Drift: Anchored Tree Sampling for Long-Horizon Video-to-Video Generation}, 
+      author={Matthew Bendel and Stephen W. Bailey and Mithilesh Vaidya and Sumukh Badam and Xingzhe He},
+      year={2026},
+      eprint={2605.20476},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.20476}, 
 }
 ```
