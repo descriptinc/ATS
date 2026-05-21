@@ -131,8 +131,8 @@ header .links { margin-top: 16px; }
   text-align: center;
   padding-top: 0px !important;
 }
-.teaser video,
-.teaser iframe {
+.teaser > .container > video,
+.teaser > .container > iframe {
   width: 100%;
   max-width: 960px;
   aspect-ratio: 16 / 9;
@@ -228,6 +228,18 @@ table.results tr.ours td {
   margin-top: 16px;
 }
 
+/* Teaser hero: featured Pose video on top, 2x2 below */
+.teaser-grid {
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.teaser-grid .featured {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
 /* 3-column layout for Wan qualitative comparisons */
 .wan-grid {
   display: grid;
@@ -247,6 +259,32 @@ table.results tr.ours td {
 .wan-grid .wan-source {
   grid-row: 2 / span 2;
   align-self: start;
+}
+
+/* 2-column layout for additional LTX results (input | output, per modality) */
+.ltx-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  margin-top: 16px;
+  align-items: stretch;
+}
+.ltx-colhead {
+  text-align: left;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--fg);
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--acc);
+}
+.ltx-rowhead {
+  grid-column: 1 / -1;
+  margin: 24px 0 4px;
+  font-size: 20px;
+  color: var(--fg);
+}
+.ltx-rowhead:first-of-type {
+  margin-top: 12px;
 }
 .vid {
   background: #ffffff;

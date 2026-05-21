@@ -47,7 +47,7 @@
 <!-- ============================================================== -->
 <section class="teaser">
   <div class="container">
-    <h2>40+ minute V2V using LTX-2.3</h2>
+    <h2><strong>40+ minute</strong> V2V using LTX-2.3</h2>
     <p class="caption">
       ATS is a training-free scheduler that works with <em>any</em> V2V
       generator supporting two-sided, anchor-bracketed sampling. Here we
@@ -56,7 +56,9 @@
       quantify ATS head-to-head against autoregressive baselines on
       Wan&nbsp;2.1&nbsp;+&nbsp;VACE.
     </p>
-    <div class="video-grid">
+    <div class="video-grid teaser-grid">
+      <div class="vid ours featured"><div class="vlabel">Pose</div>
+        <iframe src="https://www.youtube.com/embed/vEy6_yUuFIA?autoplay=1&mute=1&loop=1&playlist=vEy6_yUuFIA&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
       <div class="vid ours"><div class="vlabel">Inpainting</div>
         <iframe src="https://www.youtube.com/embed/uKGd_hjArtk?autoplay=1&mute=1&loop=1&playlist=uKGd_hjArtk&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
       <div class="vid ours"><div class="vlabel">Outpainting</div>
@@ -65,8 +67,6 @@
         <iframe src="https://www.youtube.com/embed/ovVakDIZsbw?autoplay=1&mute=1&loop=1&playlist=ovVakDIZsbw&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
       <div class="vid ours"><div class="vlabel">Depth</div>
         <iframe src="https://www.youtube.com/embed/EpPRyJze7Bo?autoplay=1&mute=1&loop=1&playlist=EpPRyJze7Bo&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-      <div class="vid ours"><div class="vlabel">Pose</div>
-        <iframe src="https://www.youtube.com/embed/vEy6_yUuFIA?autoplay=1&mute=1&loop=1&playlist=vEy6_yUuFIA&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
     </div>
   </div>
 </section>
@@ -362,6 +362,57 @@
         <iframe src="https://www.youtube.com/embed/VAJ9b69WzSU?autoplay=1&mute=1&loop=1&playlist=VAJ9b69WzSU&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
     </div>
 
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- ADDITIONAL LTX RESULTS                                          -->
+<!-- ============================================================== -->
+<section id="ltx-extra">
+  <div class="container">
+    <h2>Additional LTX-2.3 Results</h2>
+    <p class="caption">
+      Additional LTX-2.3 generations across the same five
+      conditioning modalities. Each row pairs the conditioning input (left)
+      with the ATS output (right).
+    </p>
+
+    <div class="ltx-grid">
+      <!-- =============== Inpaint =============== -->
+      <h3 class="ltx-rowhead">Inpaint</h3>
+      <div class="vid"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/4C7CjBJLcOY?autoplay=1&mute=1&loop=1&playlist=4C7CjBJLcOY&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS</div>
+        <iframe src="https://www.youtube.com/embed/peP7HPP0PeY?autoplay=1&mute=1&loop=1&playlist=peP7HPP0PeY&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <!-- =============== Edge (Canny) =============== -->
+      <h3 class="ltx-rowhead">Edge</h3>
+      <div class="vid"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/0suhEhX-L_4?autoplay=1&mute=1&loop=1&playlist=0suhEhX-L_4&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS</div>
+        <iframe src="https://www.youtube.com/embed/5q36zi0gCTE?autoplay=1&mute=1&loop=1&playlist=5q36zi0gCTE&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <!-- =============== Outpaint =============== -->
+      <h3 class="ltx-rowhead">Outpaint</h3>
+      <div class="vid"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/ndoYoqbKXL4?autoplay=1&mute=1&loop=1&playlist=ndoYoqbKXL4&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS</div>
+        <iframe src="https://www.youtube.com/embed/TPV-dD7vW9U?autoplay=1&mute=1&loop=1&playlist=TPV-dD7vW9U&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <!-- =============== Pose =============== -->
+      <h3 class="ltx-rowhead">Pose</h3>
+      <div class="vid"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/y6y9h3tLzUc?autoplay=1&mute=1&loop=1&playlist=y6y9h3tLzUc&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS</div>
+        <iframe src="https://www.youtube.com/embed/huf7nPCW68A?autoplay=1&mute=1&loop=1&playlist=huf7nPCW68A&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+
+      <!-- =============== Depth =============== -->
+      <h3 class="ltx-rowhead">Depth</h3>
+      <div class="vid"><div class="vlabel">Input</div>
+        <iframe src="https://www.youtube.com/embed/z0ptqqvheBs?autoplay=1&mute=1&loop=1&playlist=z0ptqqvheBs&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="vid ours"><div class="vlabel">ATS</div>
+        <iframe src="https://www.youtube.com/embed/nY7lG7C7bQc?autoplay=1&mute=1&loop=1&playlist=nY7lG7C7bQc&controls=0&modestbranding=1&rel=0&playsinline=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
   </div>
 </section>
 
